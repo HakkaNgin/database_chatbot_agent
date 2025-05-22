@@ -1,8 +1,10 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
+from powerbi.query import ask_powerbi
 import openai
 import os
-from dotenv import load_dotenv
+
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -37,3 +39,9 @@ async def chat_endpoint(request: ChatRequest):
     )
     answer = response["choices"][0]["message"]["content"]
     return {"response": answer}
+
+# Query powerBI
+@app.post("/query_powerbi")
+async def query_powerbi(request: QueryRequest):
+    result = await ask_powerbi(request.question)
+    return {"result": result}
