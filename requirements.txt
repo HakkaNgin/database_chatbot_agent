@@ -5,3 +5,4 @@ openai
 gunicorn
 python-dotenv
 asyncpg
+google-cloud-bigquery

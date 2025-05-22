@@ -1,4 +1,4 @@
-from .auth import get_access_token
+from .auth_powerBI import get_access_token
 import httpx
 
 async def ask_powerbi(question: str):
