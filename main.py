@@ -15,3 +15,7 @@ async def chat(request: Request):
         messages=[{"role": "user", "content": user_query}]
     )
     return {"response": response["choices"][0]["message"]["content"]}
+
+@app.get("/")
+def read_root():
+    return {"message": "FastAPI app is running!"}
