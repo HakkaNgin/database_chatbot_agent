@@ -1,4 +1,6 @@
 fastapi
 uvicorn[standard]
 openai
+gunicorn
 python-dotenv
+asyncpg
