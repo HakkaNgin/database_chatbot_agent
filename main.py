@@ -16,18 +16,18 @@ openai = OpenAI(
 )
 
 # For local testing
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
 # For deployment on Azure
-# # Get JSON string from Azure App Setting
-# cred_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+# Get JSON string from Azure App Setting
+cred_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
 
-# # Write to temporary file
-# with open("/tmp/gcp_creds.json", "w") as f:
-#     f.write(cred_json)
+# Write to temporary file
+with open("/tmp/gcp_creds.json", "w") as f:
+    f.write(cred_json)
 
-# # Point BigQuery client to it
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/gcp_creds.json"
+# Point BigQuery client to it
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/gcp_creds.json"
 
 app = FastAPI()
 
