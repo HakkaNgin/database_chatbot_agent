@@ -96,6 +96,7 @@ async def query_insight(user_input: UserQuery):
         "'Order Date', 'Ship Date', 'Customer ID', 'Customer Name', 'Segment', 'Country', 'City', 'State', "
         "'Region', 'Product ID', 'Category', 'Sub-Category', 'Product Name', 'Sales', 'Quantity', 'Discount', 'Profit'. "
         "Use appropriate aggregation and filtering when necessary. Always use the full table name in your queries."
+        "Do not wrap the full path in backticks"
     )
 
 
