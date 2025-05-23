@@ -83,12 +83,21 @@ async def chat_endpoint(request: ChatRequest):
 async def query_insight(user_input: UserQuery):
     print("Received query:", user_input.query)
     # Define a context prompt that describes the schema
+    # schema_description = (
+    #     "You are a SQL expert. Convert the user's natural language question into a valid BigQuery SQL query. "
+    #     "The dataset contains the following fields: 'Order Date', 'Ship Date', 'Customer ID', 'Customer Name', "
+    #     "'Segment', 'Country', 'City', 'State', 'Region', 'Product ID', 'Category', 'Sub-Category', 'Product Name', "
+    #     "'Sales', 'Quantity', 'Discount', 'Profit'. Use appropriate aggregation and filtering when necessary."
+    # )
+
     schema_description = (
         "You are a SQL expert. Convert the user's natural language question into a valid BigQuery SQL query. "
-        "The dataset contains the following fields: 'Order Date', 'Ship Date', 'Customer ID', 'Customer Name', "
-        "'Segment', 'Country', 'City', 'State', 'Region', 'Product ID', 'Category', 'Sub-Category', 'Product Name', "
-        "'Sales', 'Quantity', 'Discount', 'Profit'. Use appropriate aggregation and filtering when necessary."
+        "Use the table teak-listener-460614-m8.senquire_agent.superstore, which contains the following fields: "
+        "'Order Date', 'Ship Date', 'Customer ID', 'Customer Name', 'Segment', 'Country', 'City', 'State', "
+        "'Region', 'Product ID', 'Category', 'Sub-Category', 'Product Name', 'Sales', 'Quantity', 'Discount', 'Profit'. "
+        "Use appropriate aggregation and filtering when necessary. Always use the full table name in your queries."
     )
+
 
     prompt = f"{schema_description}\nUser query: '{user_input.query}'"
 
@@ -100,7 +109,14 @@ async def query_insight(user_input: UserQuery):
         ]
     )
 
-    sql_query = sql_response.choices[0].message.content.strip()
+    raw_sql = sql_response.choices[0].message.content.strip()
+
+    # Strip markdown-style code blocks
+    sql_clean = raw_sql.replace("```sql", "").replace("```", "").strip()
+
+    # Only take first statement if multiple
+    sql_query = sql_clean.split(";")[0] + ";"  # take only first query
+
     print("Generated SQL:", sql_query)
 
     if not sql_query:
