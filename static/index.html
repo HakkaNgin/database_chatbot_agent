@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat with DataBot</title>
+</head>
+<body>
+  <h1>Ask the AI!</h1>
+  <input id="question" type="text" placeholder="Type your question..." style="width:300px;" />
+  <button onclick="send()">Ask</button>
+  <pre id="response"></pre>
+
+  <script>
+    async function send() {
+      const query = document.getElementById("question").value;
+      const res = await fetch("/query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query })
+      });
+      const data = await res.json();
+      document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>

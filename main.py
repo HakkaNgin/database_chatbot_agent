@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 from google.cloud import bigquery
 from pydantic import BaseModel
 import openai
@@ -17,6 +18,9 @@ class ChatRequest(BaseModel):
 
 class UserQuery(BaseModel):
     query: str
+
+# Mount HTML code for UI
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 @app.get("/") # What will appear at the root of the app upon startup
 def read_root():
