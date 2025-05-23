@@ -21,8 +21,9 @@
       const data = await res.json();
       // document.getElementById("response").innerText = JSON.stringify(data, null, 2);
       document.getElementById("response").innerText = 
-      `SQL:\n${data.sql_query || 'N/A'}\n\nResponse:\n${JSON.stringify(data.results || data.error, null, 2)}`; // print response
-
+        `SQL:\n${data.sql_query || 'N/A'}\n\n` +
+        `Response:\n${JSON.stringify(data.results || data.error, null, 2)}\n\n` +
+        `GPT Comments:\n${data.comments || 'N/A'}`; // print response
     }
   </script>
 </body>

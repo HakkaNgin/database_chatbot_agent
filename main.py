@@ -65,6 +65,7 @@ def read_root():
         return f.read()
 
 # Handles input unrelated to dataset
+# Placeholder code
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
     print(request.query)
@@ -133,7 +134,23 @@ async def query_insight(user_input: UserQuery):
         query_job = client.query(sql_query)
         results = query_job.result()
         rows = [dict(row.items()) for row in results]
-        return {"sql_query": sql_query, "results": rows}
+
+        analysis_prompt = (
+            "Given the following SQL query and result rows, provide a concise summary and comment on the findings. "
+            "Include any insights, and if appropriate, describe a simple chart that could visualize the data."
+        )
+
+        chat_summary = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a data analyst who summarizes SQL query results."},
+                {"role": "user", "content": f"SQL Query: {sql_query}\n\nResults: {rows}\n\n{analysis_prompt}"}
+            ]
+        )
+
+        comments = chat_summary.choices[0].message.content.strip()
+        return {"sql_query": sql_query, "results": rows, "comments": comments}
+    
     except Exception as e:
         return {"sql_query": sql_query, "error": str(e)}
 
