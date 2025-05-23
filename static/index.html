@@ -12,13 +12,17 @@
   <script>
     async function send() {
       const query = document.getElementById("question").value;
+      // const res = await fetch("http://localhost:8000/query", {
       const res = await fetch("/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query })
       });
       const data = await res.json();
-      document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+      // document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+      document.getElementById("response").innerText = 
+      `SQL:\n${data.sql_query || 'N/A'}\n\nResponse:\n${JSON.stringify(data.results || data.error, null, 2)}`; // print response
+
     }
   </script>
 </body>

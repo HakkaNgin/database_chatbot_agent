@@ -1,8 +1,8 @@
-fastapi
-# uvicorn[standard]
-uvicorn
-openai
-gunicorn
-python-dotenv
-asyncpg
-google-cloud-bigquery
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+# uvicorn
+openai==1.82.0
+gunicorn==23.0.0
+python-dotenv==1.1.0
+asyncpg==0.30.0
+google-cloud-bigquery==3.33.0
