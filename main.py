@@ -99,7 +99,12 @@ async def query_insight(user_input: UserQuery):
     )
 
 
-    prompt = f"{schema_description}\nUser query: '{user_input.query}'"
+    #prompt = f"{schema_description}\nUser query: '{user_input.query}'"
+    prompt = (
+        f"{schema_description}\n"
+        f"User query: '{user_input.query}'\n"
+        "Return only the SQL query as plaintext. Do not include any explanations, markdown, or formatting."
+    )
 
     sql_response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
