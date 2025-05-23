@@ -98,6 +98,7 @@ async def query_insight(user_input: UserQuery):
         "'Region', 'Product ID', 'Category', 'Sub-Category', 'Product Name', 'Sales', 'Quantity', 'Discount', 'Profit'. "
         "Use appropriate aggregation and filtering when necessary. Always use the full table name in your queries."
         "Do not wrap the full path in backticks"
+        "Always use the table teak-listener-460614-m8.senquire_agent.superstore. If querying metadata such as column names, use teak-listener-460614-m8.senquire_agent.INFORMATION_SCHEMA.COLUMNS. Do not use .INFORMATION_SCHEMA.COLUMNS on the full table path."
     )
 
 
